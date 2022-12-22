@@ -34,7 +34,8 @@ public class App extends JFrame{
         btnSave.addActionListener(e -> {
             try {
                 int ctr = 0;
-                if(tfName.getText().isBlank() || tfAge.getText().isBlank()) throw new NumberFormatException();
+                if(tfName.getText().isBlank() || tfAge.getText().isBlank())
+                    throw new NumberFormatException();
                 if(!Character.isDigit(tfAge.getText().charAt(0))) tfAge.setText("");
 
                 if (rbCustomer.isSelected()) {
@@ -42,10 +43,12 @@ public class App extends JFrame{
                     persons.add(c);
                     taPersons.append(String.valueOf(persons.indexOf(c)+1 + ". Customer - " + c.getName() + " (" + c.getAge() + ")") + "\n");
                 } else if (rbManager.isSelected()) {
-                    if(tfMonths.getText().isBlank() || tfSalary.getText().isBlank()) throw new NumberFormatException();
-                    if(!Character.isDigit(tfMonths.getText().charAt(0))) tfMonths.setText("");
-                    if(!Character.isDigit(tfSalary.getText().charAt(0))) tfSalary.setText("");
-                    if(Integer.parseInt(tfSalary.getText()) < 0) {
+                    if(tfMonths.getText().isBlank() || tfSalary.getText().isBlank())
+                        throw new NumberFormatException();
+
+                            if(!Character.isDigit(tfMonths.getText().charAt(0))) tfMonths.setText("");
+                                if(!Character.isDigit(tfSalary.getText().charAt(0))) tfSalary.setText("");
+                                    if(Integer.parseInt(tfSalary.getText()) < 0) {
                         tfSalary.setText("");
                         throw new NumberFormatException();
                     }
@@ -61,18 +64,22 @@ public class App extends JFrame{
                     persons.add(m);
                     taPersons.append(String.valueOf(persons.indexOf(m)+1 + ". Manager - " + m.getName() + " (" + m.getAge() + ")") + "\n");
                 } else if (rbClerk.isSelected()) {
-                    if(tfMonths.getText().isBlank() || tfSalary.getText().isBlank()) throw new NumberFormatException();
-                    if(!Character.isDigit(tfMonths.getText().charAt(0))) tfMonths.setText("");
-                    if(!Character.isDigit(tfSalary.getText().charAt(0))) tfSalary.setText("");
-                    if(Integer.parseInt(tfSalary.getText()) < 0) {
+                    if(tfMonths.getText().isBlank() || tfSalary.getText().isBlank())
+                        throw new NumberFormatException();
+                        if(!Character.isDigit(tfMonths.getText().charAt(0))) tfMonths.setText("");
+                            if(!Character.isDigit(tfSalary.getText().charAt(0))) tfSalary.setText("");
+                                if(Integer.parseInt(tfSalary.getText()) < 0) {
                         tfSalary.setText("");
                         throw new NumberFormatException();
                     }
+
                     if(Integer.parseInt(tfAge.getText()) < 0 || Integer.parseInt(tfMonths.getText()) == 0) {
                         tfAge.setText("");
                         throw new NumberFormatException();
                     }
-                    if(Integer.parseInt(tfMonths.getText()) < 0) throw new NumberFormatException();
+
+                    if(Integer.parseInt(tfMonths.getText()) < 0)
+                        throw new NumberFormatException();
                     Clerk cl = new Clerk(Integer.parseInt(tfAge.getText()), tfName.getText(), Integer.parseInt(tfMonths.getText()), Double.parseDouble(tfSalary.getText()));
                     persons.add(cl);
                     taPersons.append(String.valueOf(persons.indexOf(cl)+1 + ". Clerk - " + cl.getName() + " (" + cl.getAge() + ")") + "\n");
@@ -82,9 +89,12 @@ public class App extends JFrame{
                 tfAge.setText("");
                 tfName.setText("");
             } catch (NumberFormatException n) {
-                JOptionPane.showMessageDialog(pnlMain, "Invalid Input! Please enter a valid number.");
+                JOptionPane.showMessageDialog
+                        (pnlMain, "Invalid Input! Please enter a valid number.");
+
             } catch (IllegalArgumentException i) {
-                JOptionPane.showMessageDialog(pnlMain, "Invalid input!");
+                JOptionPane.showMessageDialog
+                        (pnlMain, "Invalid input!");
             }
         });
     }
