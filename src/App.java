@@ -146,6 +146,30 @@ public class App extends JFrame{
                     System.out.println(p);
             }
         });
+        rbCustomer.addChangeListener(e -> {
+            if(rbCustomer.isSelected()) {
+                tfSalary.setEditable(false);
+                tfSalary.setEnabled(false);
+                tfMonths.setEnabled(false);
+                tfMonths.setEditable(false);
+            }
+        });
+        rbClerk.addChangeListener(e -> {
+            if(rbClerk.isSelected()) {
+                tfSalary.setEditable(true);
+                tfSalary.setEnabled(true);
+                tfMonths.setEnabled(true);
+                tfMonths.setEditable(true);
+            }
+        });
+        rbManager.addChangeListener(e -> {
+            if(rbManager.isSelected()) {
+                tfSalary.setEditable(true);
+                tfSalary.setEnabled(true);
+                tfMonths.setEnabled(true);
+                tfMonths.setEditable(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
