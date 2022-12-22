@@ -183,7 +183,7 @@ public class App extends JFrame{
                     (Integer.parseInt(tfLoad.getText()));
         });
         btnSavePerson.addActionListener(e -> {
-            try(BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\Dador\\IdeaProjects\\CSIT227Finals-Dador\\src\\persons")))
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter("E:\\Intellij\\CSIT227Finals-Dador\\src\\persons")))
             {
                 bw.write("-----Database-----");
                 for(Person p : persons) {
