@@ -1,5 +1,7 @@
-public class Customer extends Person{
-    Customer(String name, int age) {
-        super(name, age);
+class Customer extends Person {
+
+    public Customer(int age, String name)
+    {
+        super(age, name);
     }
 }

@@ -1,18 +1,10 @@
-public class Person {
+public abstract class Person {
     // TODO implement Person and its subclasses in other Java files
-    private String name;
     private int age;
+    private String name;
 
-    Person(String name, int age) {
-        this.name = name;
+    public Person(int age, String name) {
         this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 
@@ -22,6 +14,14 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

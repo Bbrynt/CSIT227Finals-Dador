@@ -1,9 +1,8 @@
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class App extends JFrame{
     private JPanel pnlMain;
@@ -29,9 +28,9 @@ public class App extends JFrame{
     public App() {
         persons = new ArrayList<>();
         ButtonGroup brynt = new ButtonGroup();
+        brynt.add(rbCustomer);
         brynt.add(rbManager);
         brynt.add(rbClerk);
-        brynt.add(rbCustomer);
         // TODO add implementations for all milestones here
 
         btnSave.addActionListener(e -> {
@@ -45,28 +44,37 @@ public class App extends JFrame{
                     Customer c = new Customer(Integer.parseInt(tfAge.getText()), tfName.getText());
                     persons.add(c);
                     taPersons.append(String.valueOf(persons.indexOf(c)+1 + ". Customer - " + c.getName() + " (" + c.getAge() + ")") + "\n");
-                } else if (rbManager.isSelected()) {
+                } else if (rbManager.isSelected())
+                {
                     if(tfMonths.getText().isBlank() || tfSalary.getText().isBlank())
                         throw new NumberFormatException();
-
-                            if(!Character.isDigit(tfMonths.getText().charAt(0))) tfMonths.setText("");
-                                if(!Character.isDigit(tfSalary.getText().charAt(0))) tfSalary.setText("");
-                                    if(Integer.parseInt(tfSalary.getText()) < 0) {
+                    if(!Character.isDigit(tfMonths.getText().charAt(0)))
+                        tfMonths.setText("");
+                        if(!Character.isDigit(tfSalary.getText().charAt(0)))
+                            tfSalary.setText("");
+                            if(Integer.parseInt(tfSalary.getText()) < 0) {
                         tfSalary.setText("");
                         throw new NumberFormatException();
                     }
-                    if(Integer.parseInt(tfAge.getText()) < 0 || Integer.parseInt(tfMonths.getText()) == 0) {
+                    if(Integer.parseInt(tfAge.getText()) < 0 || Integer.parseInt(tfMonths.getText()) == 0)
+                        {
                         tfAge.setText("");
                         throw new NumberFormatException();
                     }
-                    if(Integer.parseInt(tfMonths.getText()) < 0) {
+                    if(Integer.parseInt(tfMonths.getText()) < 0)
+                    {
                         tfMonths.setText("");
                         throw new NumberFormatException();
                     }
-                    Manager m = new Manager(Integer.parseInt(tfAge.getText()), tfName.getText(), Integer.parseInt(tfMonths.getText()), Double.parseDouble(tfSalary.getText()));
+                    Manager m = new Manager(Integer.parseInt(tfAge.getText()),
+                    tfName.getText(), Integer.parseInt(tfMonths.getText()),
+                    Double.parseDouble(tfSalary.getText()));
+
+
                     persons.add(m);
                     taPersons.append(String.valueOf(persons.indexOf(m)+1 + ". Manager - " + m.getName() + " (" + m.getAge() + ")") + "\n");
-                } else if (rbClerk.isSelected()) {
+                } else if (rbClerk.isSelected())
+                {
                     if(tfMonths.getText().isBlank() || tfSalary.getText().isBlank())
                         throw new NumberFormatException();
                         if(!Character.isDigit(tfMonths.getText().charAt(0))) tfMonths.setText("");
@@ -75,46 +83,54 @@ public class App extends JFrame{
                         tfSalary.setText("");
                         throw new NumberFormatException();
                     }
-
-                    if(Integer.parseInt(tfAge.getText()) < 0 || Integer.parseInt(tfMonths.getText()) == 0) {
+                    if(Integer.parseInt(tfAge.getText()) < 0 || Integer.parseInt(tfMonths.getText()) == 0)
+                    {
                         tfAge.setText("");
                         throw new NumberFormatException();
                     }
-
                     if(Integer.parseInt(tfMonths.getText()) < 0)
                         throw new NumberFormatException();
-                    Clerk cl = new Clerk(Integer.parseInt(tfAge.getText()), tfName.getText(), Integer.parseInt(tfMonths.getText()), Double.parseDouble(tfSalary.getText()));
+
+                    Clerk cl = new Clerk(Integer.parseInt(tfAge.getText()),
+                    tfName.getText(), Integer.parseInt(tfMonths.getText()),
+                    Double.parseDouble(tfSalary.getText()));
+
                     persons.add(cl);
                     taPersons.append(String.valueOf(persons.indexOf(cl)+1 + ". Clerk - " + cl.getName() + " (" + cl.getAge() + ")") + "\n");
                 }
                 tfSalary.setText("");
-                tfMonths.setText("");
-                tfAge.setText("");
-                tfName.setText("");
-            } catch (NumberFormatException n) {
+                    tfMonths.setText("");
+                        tfAge.setText("");
+                            tfName.setText("");
+
+
+            } catch
+                (NumberFormatException n)
+            {
                 JOptionPane.showMessageDialog
                         (pnlMain, "Invalid Input! Please enter a valid number.");
-
-            } catch (IllegalArgumentException i) {
+            } catch (IllegalArgumentException i)
+            {
                 JOptionPane.showMessageDialog
                         (pnlMain, "Invalid input!");
             }
         });
         btnClear.addActionListener(e -> {
-            tfName.setText("");
             tfSalary.setText("");
-            tfAge.setText("");
             tfMonths.setText("");
+            tfAge.setText("");
+            tfName.setText("");
         });
-
         btnLoad.addActionListener(e -> {
             try {
                 int num = Integer.parseInt(tfLoad.getText());
-                    if(num < 1 || num > persons.size()) {
-                        throw new ArrayIndexOutOfBoundsException("Invalid index!");
+                if(num < 1 || num > persons.size())
+                {
+                    throw new ArrayIndexOutOfBoundsException("Invalid index!");
                 }
                 int ctr = 0;
-                for (Person p : persons) {
+                for (Person p : persons)
+                {
                     ctr++;
                     if (ctr == num) {
                         tfAge.setText(Integer.toString(p.getAge()));
@@ -124,30 +140,29 @@ public class App extends JFrame{
                             Employee em = (Employee) p;
                             tfMonths.setText(Integer.toString(em.getMonths_worked()));
                             tfSalary.setText(Double.toString(em.getSalary()));
+                                if (p instanceof Manager) rbManager.setSelected(true);
 
-                            if (p instanceof Manager)
-                                rbManager.setSelected(true);
-                                if (p instanceof Clerk)
-                                    rbClerk.setSelected(true);
+                                    if (p instanceof Clerk) rbClerk.setSelected(true);
                         }
-                                    if (p instanceof Customer) {
-                                        rbCustomer.setSelected(true);
+                        if (p instanceof Customer) {
+                            rbCustomer.setSelected(true);
                         }
                     }
                 }
-            } catch(NumberFormatException n) {
+            } catch(NumberFormatException n)
+            {
                 JOptionPane.showMessageDialog
                         (pnlMain, "Invalid input!");
-            } catch(IndexOutOfBoundsException i) {
+            } catch(IndexOutOfBoundsException i)
+            {
                 JOptionPane.showMessageDialog
                         (pnlMain, i.getMessage());
             }
         });
         btnSayHi.addActionListener(e ->
         {
-
             for (Person p : persons) {
-                    System.out.println(p);
+                System.out.println(p);
             }
         });
         rbCustomer.addChangeListener(e ->
@@ -179,59 +194,67 @@ public class App extends JFrame{
         });
         btnReward.addActionListener(e ->
         {
-            giveReward
-                    (Integer.parseInt(tfLoad.getText()));
+            giveReward(Integer.parseInt(tfLoad.getText()));
         });
-        btnSavePerson.addActionListener(e -> {
-            try(BufferedWriter bw = new BufferedWriter(new FileWriter("E:\\Intellij\\CSIT227Finals-Dador\\src\\persons")))
-            {
+        btnSavePerson.addActionListener(e ->
+        {
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter
+                    ("C:\\Users\\Dador\\IdeaProjects\\CSIT227Finals-Dador\\src\\persons"))) {
                 bw.write("-----Database-----");
                 for(Person p : persons) {
-                    if(p instanceof Customer)
-                    {
-                        bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Customer" + "\n\tAge: " + p.getAge());
-                    } else if(p instanceof Clerk)
-                    {
-                        bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Clerk" + "\n\tAge: " + p.getAge() + "\n\tMonths worked: " +
-                                ((Employee) p).getMonths_worked() + "\n\tSalary: " + ((Employee) p).getSalary());
-                    }else if(p instanceof Manager)
-                    {
-                        bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Manager" + "\n\tAge: " + p.getAge() + "\n\tMonths worked: " +
-                                ((Employee) p).getMonths_worked() + "\n\tSalary: " + ((Employee) p).getSalary());
+                    if(p instanceof Customer) {
+                        bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName()
+                                + " - Customer" + "\n\tAge: " + p.getAge());
+                        } else if(p instanceof Clerk) {
+                            bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Clerk" + "\n\tAge: " + p.getAge()
+                                + "\n\tMonths worked: " + ((Employee) p).getMonths_worked() + "\n\tSalary: " + ((Employee) p).getSalary());
+                            }else if(p instanceof Manager) {
+                                bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Manager" + "\n\tAge: " + p.getAge()
+                                    + "\n\tMonths worked: " + ((Employee) p).getMonths_worked() + "\n\tSalary: " + ((Employee) p).getSalary());
                     }
                     bw.newLine();
                 }
-            } catch (IOException ee)
-            {
+            } catch (IOException ee) {
                 throw new RuntimeException(ee);
+            }
+        });
+        btnLoadPerson.addActionListener(e -> {
+            try(BufferedReader br = new BufferedReader
+                    (new FileReader("C:\\Users\\Dador\\IdeaProjects\\CSIT227Finals-Dador\\src\\persons"))) {
+                String str;
+                while((str = br.readLine()) != null) {
+                    taPersons.append(str + "\n");
+                }
+                String str1;
+                int pos = 0;
+            } catch (IOException ii) {
+
             }
         });
     }
 
     public static void main(String[] args) {
-        // add here how to make GUI visible\
+        // add here how to make GUI visible
         App app = new App();
         app.setContentPane(app.pnlMain);
-
         app.setSize(500, 500);
-            app.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                app.setVisible(true);
-                    app.setTitle("Finals");
+        app.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        app.setVisible(true);
+        app.setTitle("Finals");
     }
 
-    static void giveReward(int n) {
+    void giveReward(int num) {
         try {
-            if(persons.get(num-1) instanceof Employee) {
+            if(persons.get(num-1) instanceof Employee)
+            {
                 Employee emp = (Employee) persons.get(num-1);
-
                 if(emp.getMonths_worked() == 0)
                     throw new ArithmeticException("Person is AWOL!!");
                 JOptionPane.showMessageDialog
                         (pnlMain, emp.getName() + " will receive " + "Php " + String.format("%.2f", emp.thirteenthmonth())  + ".");
             } else
                 throw new IllegalArgumentException("Person is a customer.");
-        } catch(NumberFormatException k)
-        {
+        } catch(NumberFormatException k) {
             JOptionPane.showMessageDialog
                     (pnlMain, "Input invalid!");
         } catch (ArithmeticException | IllegalArgumentException e)
