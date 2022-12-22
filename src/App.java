@@ -98,10 +98,47 @@ public class App extends JFrame{
             }
         });
         btnClear.addActionListener(e -> {
-            tfSalary.setText("");
-            tfMonths.setText("");
-            tfAge.setText("");
             tfName.setText("");
+            tfSalary.setText("");
+            tfAge.setText("");
+            tfMonths.setText("");
+        });
+
+        btnLoad.addActionListener(e -> {
+            try {
+                int num = Integer.parseInt(tfLoad.getText());
+                    if(num < 1 || num > persons.size()) {
+                        throw new ArrayIndexOutOfBoundsException("Invalid index!");
+                }
+                int ctr = 0;
+                for (Person p : persons) {
+                    ctr++;
+                    if (ctr == num) {
+                        tfAge.setText(Integer.toString(p.getAge()));
+                        tfName.setText(p.getName());
+
+                        if (p instanceof Employee) {
+                            Employee em = (Employee) p;
+                            tfMonths.setText(Integer.toString(em.getMonths_worked()));
+                            tfSalary.setText(Double.toString(em.getSalary()));
+
+                            if (p instanceof Manager)
+                                rbManager.setSelected(true);
+                                if (p instanceof Clerk)
+                                    rbClerk.setSelected(true);
+                        }
+                                    if (p instanceof Customer) {
+                                        rbCustomer.setSelected(true);
+                        }
+                    }
+                }
+            } catch(NumberFormatException n) {
+                JOptionPane.showMessageDialog
+                        (pnlMain, "Invalid input!");
+            } catch(IndexOutOfBoundsException i) {
+                JOptionPane.showMessageDialog
+                        (pnlMain, i.getMessage());
+            }
         });
     }
 
