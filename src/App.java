@@ -140,35 +140,44 @@ public class App extends JFrame{
                         (pnlMain, i.getMessage());
             }
         });
-        btnSayHi.addActionListener(e -> {
+        btnSayHi.addActionListener(e ->
+        {
 
             for (Person p : persons) {
                     System.out.println(p);
             }
         });
-        rbCustomer.addChangeListener(e -> {
+        rbCustomer.addChangeListener(e ->
+        {
             if(rbCustomer.isSelected()) {
-                tfSalary.setEditable(false);
-                tfSalary.setEnabled(false);
                 tfMonths.setEnabled(false);
                 tfMonths.setEditable(false);
+                tfSalary.setEditable(false);
+                tfSalary.setEnabled(false);
             }
         });
-        rbClerk.addChangeListener(e -> {
+        rbClerk.addChangeListener(e ->
+        {
             if(rbClerk.isSelected()) {
-                tfSalary.setEditable(true);
-                tfSalary.setEnabled(true);
                 tfMonths.setEnabled(true);
                 tfMonths.setEditable(true);
+                tfSalary.setEditable(true);
+                tfSalary.setEnabled(true);
             }
         });
-        rbManager.addChangeListener(e -> {
+        rbManager.addChangeListener(e ->
+        {
             if(rbManager.isSelected()) {
-                tfSalary.setEditable(true);
-                tfSalary.setEnabled(true);
                 tfMonths.setEnabled(true);
                 tfMonths.setEditable(true);
+                tfSalary.setEditable(true);
+                tfSalary.setEnabled(true);
             }
+        });
+        btnReward.addActionListener(e ->
+        {
+            giveReward
+                    (Integer.parseInt(tfLoad.getText()));
         });
     }
 
@@ -177,12 +186,30 @@ public class App extends JFrame{
         App app = new App();
         app.setContentPane(app.pnlMain);
 
-        app.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            app.setVisible(true);
-            app.setSize(500,500);
+        app.setSize(500, 500);
+            app.setDefaultCloseOperation(EXIT_ON_CLOSE);
+                app.setVisible(true);
+                    app.setTitle("Finals");
     }
 
     static void giveReward(int n) {
-
+        try {
+            if(persons.get(num-1) instanceof Employee) {
+                Employee emp = (Employee) persons.get(num-1);
+                if(emp.getMonths_worked() == 0)
+                    throw new ArithmeticException("Person is AWOL!!");
+                JOptionPane.showMessageDialog
+                        (pnlMain, emp.getName() + " will receive " + "Php " + String.format("%.2f", emp.thirteenthmonth())  + ".");
+            } else
+                throw new IllegalArgumentException("Person is a customer.");
+        } catch(NumberFormatException k)
+        {
+            JOptionPane.showMessageDialog
+                    (pnlMain, "Input invalid!");
+        } catch (ArithmeticException | IllegalArgumentException e)
+        {
+            JOptionPane.showMessageDialog
+                    (pnlMain, e.getMessage());
+        }
     }
 }
