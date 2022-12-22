@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,6 +182,30 @@ public class App extends JFrame{
             giveReward
                     (Integer.parseInt(tfLoad.getText()));
         });
+        btnSavePerson.addActionListener(e -> {
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\Dador\\IdeaProjects\\CSIT227Finals-Dador\\src\\persons")))
+            {
+                bw.write("-----Database-----");
+                for(Person p : persons) {
+                    if(p instanceof Customer)
+                    {
+                        bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Customer" + "\n\tAge: " + p.getAge());
+                    } else if(p instanceof Clerk)
+                    {
+                        bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Clerk" + "\n\tAge: " + p.getAge() + "\n\tMonths worked: " +
+                                ((Employee) p).getMonths_worked() + "\n\tSalary: " + ((Employee) p).getSalary());
+                    }else if(p instanceof Manager)
+                    {
+                        bw.write("\n" + (persons.indexOf(p) + 1) + ". " + p.getName() + " - Manager" + "\n\tAge: " + p.getAge() + "\n\tMonths worked: " +
+                                ((Employee) p).getMonths_worked() + "\n\tSalary: " + ((Employee) p).getSalary());
+                    }
+                    bw.newLine();
+                }
+            } catch (IOException ee)
+            {
+                throw new RuntimeException(ee);
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -196,6 +223,7 @@ public class App extends JFrame{
         try {
             if(persons.get(num-1) instanceof Employee) {
                 Employee emp = (Employee) persons.get(num-1);
+
                 if(emp.getMonths_worked() == 0)
                     throw new ArithmeticException("Person is AWOL!!");
                 JOptionPane.showMessageDialog
