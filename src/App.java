@@ -97,6 +97,12 @@ public class App extends JFrame{
                         (pnlMain, "Invalid input!");
             }
         });
+        btnClear.addActionListener(e -> {
+            tfSalary.setText("");
+            tfMonths.setText("");
+            tfAge.setText("");
+            tfName.setText("");
+        });
     }
 
     public static void main(String[] args) {
