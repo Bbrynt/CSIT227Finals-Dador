@@ -140,6 +140,12 @@ public class App extends JFrame{
                         (pnlMain, i.getMessage());
             }
         });
+        btnSayHi.addActionListener(e -> {
+
+            for (Person p : persons) {
+                    System.out.println(p);
+            }
+        });
     }
 
     public static void main(String[] args) {
